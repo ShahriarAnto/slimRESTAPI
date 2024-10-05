@@ -1,5 +1,6 @@
 <?php
 use App\Database;
+use Slim\Views\PhpRenderer;
 
 return [
     Database::class => function() {
@@ -9,5 +10,11 @@ return [
             user : 'root',
             password : ''
         );
-    } 
+    },
+    
+    PhpRenderer::class => function() {
+        $renderer = new PhpRenderer(__DIR__ . '/../views');
+        $renderer->setLayout('layout.php');
+        return $renderer;
+    }
 ];

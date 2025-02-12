@@ -1,11 +1,23 @@
 <h1>Signup</h1>
 
+    <?php if (isset($errors)): ?>
+        <ul>
+        <?php foreach ($errors as $field): ?>
+            <?php foreach ($field as $error): ?>
+                <li><?php print_r($error) ?></li>
+            <?php endforeach; ?>
+        <?php endforeach; ?>
+</ul>
+<?php endif; ?>
+
 <form method = "post" action = "/signup">
     <label for="name">Name</label>
-    <input type="text" name = "name" id = "name">
+    <input type="text" name = "name" id = "name" 
+        value="<?= htmlspecialchars($data['name'] ?? '') ?>">
 
     <label for = "email">email</label>
-    <input type= "email" name ="email" id ="email">
+    <input type= "email" name ="email" id ="email" 
+        value="<?= htmlspecialchars($data['email'] ?? '') ?>">
 
     <label for="password">Password</label>
     <input type="password" name="password" id="password">

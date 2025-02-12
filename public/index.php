@@ -23,7 +23,7 @@ $app->addBodyParsingMiddleware();
 
 $app->addErrorMiddleware(true , true , true);
  
-
+require __DIR__ . '/../config/bootstrap.php'; // Load bootstrap file
 require APP_ROOT . '/config/routes.php';
 
 $app->run();

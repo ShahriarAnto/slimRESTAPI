@@ -54,8 +54,8 @@ class Signup
         }
         $data['password_hash'] = password_hash($data['password'] , PASSWORD_DEFAULT);
         $api_key = bin2hex(random_bytes(16));
-        $data['api_key'] = $api_key;
-        $data['api_key_hash'] = 'random1';
+        $data['api_key'] = '';
+        $data['api_key_hash'] = hash_hmac('sha256' , $api_key , env('HASH_SECRET_KEY'));
 
         $this->repository->create($data);
 

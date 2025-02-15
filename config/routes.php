@@ -8,11 +8,15 @@ use Slim\Routing\RouteCollectorProxy;
 use App\Middleware\RequireAPIKey;
 use App\Controller\Home;
 use App\Controller\Signup;
+use App\Controller\Login;
 use App\Middleware\AddJsonResponseHeader;
 
 $app->get('/' , Home::class);
 $app->get('/signup' , [Signup::class , 'new']);
 $app->post('/signup' , [Signup::class, 'create']);
+
+$app->get('/login' , [Login::class , 'new']);
+$app->post('/login' , [Login::class, 'create']);
 
 
 

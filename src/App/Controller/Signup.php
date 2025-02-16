@@ -35,6 +35,10 @@ class Signup
         foreach ($fields as $field => $rules) {
             $this->validator->mapFieldRules($field, $rules);
         }
+
+        $this->validator->rule(function ($field , $value, $param, $fields){
+            return $this->repository->find('email' , $value) === false;
+        }, 'email')->message('{field} is already taken');
         
         
     }

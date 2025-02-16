@@ -4,11 +4,8 @@ use App\Database;
 use Slim\Factory\AppFactory;
 use DI\ContainerBuilder;
 use Slim\Handlers\Strategies\RequestResponseArgs;
-use App\Middleware\AddJsonResponseHeader;
-use App\Controller\EmployeeIndex;
-use App\Controller\Employee;
-use App\Middleware\GetEmployee;
-use Slim\Routing\RouteCollectorProxy;
+
+
 
 define('APP_ROOT' , dirname(__DIR__ ));
 
@@ -24,21 +21,9 @@ $collector->setDefaultInvocationStrategy(new RequestResponseArgs);
 
 $app->addBodyParsingMiddleware();
 
-$error_middleware = $app->addErrorMiddleware(true , true , true);
-$error_handler = $error_middleware->getDefaultErrorHandler();
-$error_handler->forceContentType('application/json'); 
-
-$app->add(new AddJsonResponseHeader);
-
-$app->group('/api' , function (RouteCollectorProxy $group){
-    $group->get('/employee', EmployeeIndex::class);
-    $group->post('/employee', [Employee::class, 'create']);
-    $group->group('' , function (RouteCollectorProxy $group)
-    {
-        $group->get('/employee/{id:[0-9]+}' , Employee::class . ':show');
-        $group->patch('/employee/{id:[0-9]+}' , Employee::class . ':update');
-        $group->delete('/employee/{id:[0-9]+}' , Employee::class . ':delete');
-    })->add(GetEmployee::class);
-});
+$app->addErrorMiddleware(true , true , true);
+ 
+require __DIR__ . '/../config/bootstrap.php'; // Load bootstrap file
+require APP_ROOT . '/config/routes.php';
 
 $app->run();

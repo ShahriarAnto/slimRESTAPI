@@ -28,6 +28,7 @@ class Login
 
         if($user && password_verify($data['password'] , $user['password_hash']))
         {
+            $_SESSION['user_id'] = $user['id'];
             return $response->withHeader('Location' , '/')
             ->withStatus(302);
         }
@@ -36,6 +37,14 @@ class Login
             'data' => $data,
             'error' => 'Invalid login'
         ]);
+    }
+
+    public function destroy(Request $request, Response $response): Response
+    {
+        session_destroy();
+        return $response
+            ->withHeader('Location', '/')
+            ->withStatus(302);
     }
 
 }

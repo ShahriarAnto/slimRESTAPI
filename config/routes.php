@@ -6,17 +6,29 @@ use App\Controller\Employee;
 use App\Middleware\GetEmployee;
 use Slim\Routing\RouteCollectorProxy;
 use App\Middleware\RequireAPIKey;
+use App\Middleware\AddJsonResponseHeader;
+use App\Middleware\ActivateSession;
+use App\Middleware\RequireLogin;
 use App\Controller\Home;
 use App\Controller\Signup;
 use App\Controller\Login;
-use App\Middleware\AddJsonResponseHeader;
 
-$app->get('/' , Home::class);
-$app->get('/signup' , [Signup::class , 'new']);
-$app->post('/signup' , [Signup::class, 'create']);
+use App\Controller\Profile;
 
-$app->get('/login' , [Login::class , 'new']);
-$app->post('/login' , [Login::class, 'create']);
+$app->group('' , function (RouteCollectorProxy $group){
+    $group->get('/' , Home::class);
+    $group->get('/signup' , [Signup::class , 'new']);
+    $group->post('/signup' , [Signup::class, 'create']);
+    $group->get('/signup/success' , [Signup::class , 'success']);
+
+    $group->get('/login' , [Login::class , 'new']);
+    $group->post('/login' , [Login::class, 'create']);
+
+    $group->get('/logout' , [Login::class, 'destroy']);
+
+    $group->get('/profile' , [Profile::class , 'show'])
+    ->add(RequireLogin::class);
+})->add(ActivateSession::class);
 
 
 

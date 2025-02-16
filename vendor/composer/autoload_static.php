@@ -59,6 +59,7 @@ class ComposerStaticInit026509606a55be5c56c243e48adc6597
         'D' => 
         array (
             'Dotenv\\' => 7,
+            'Defuse\\Crypto\\' => 14,
             'DI\\' => 3,
         ),
     );
@@ -141,6 +142,10 @@ class ComposerStaticInit026509606a55be5c56c243e48adc6597
         'Dotenv\\' => 
         array (
             0 => __DIR__ . '/..' . '/vlucas/phpdotenv/src',
+        ),
+        'Defuse\\Crypto\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/defuse/php-encryption/src',
         ),
         'DI\\' => 
         array (
